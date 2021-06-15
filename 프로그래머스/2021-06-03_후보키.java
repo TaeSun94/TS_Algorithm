@@ -88,3 +88,84 @@ class Solution {
         comb(s_idx, idx+1,relation);
     }
 }
+
+/*
+정확성  테스트
+테스트 1 〉	통과 (2.02ms, 52MB)
+테스트 2 〉	통과 (1.61ms, 53.2MB)
+테스트 3 〉	통과 (1.85ms, 52.1MB)
+테스트 4 〉	통과 (2.00ms, 52.5MB)
+테스트 5 〉	통과 (1.84ms, 52.6MB)
+테스트 6 〉	통과 (1.78ms, 52.3MB)
+테스트 7 〉	통과 (1.74ms, 52.1MB)
+테스트 8 〉	통과 (1.75ms, 52.3MB)
+테스트 9 〉	통과 (2.18ms, 52.5MB)
+테스트 10 〉	통과 (2.03ms, 52.8MB)
+테스트 11 〉	통과 (4.28ms, 52.8MB)
+테스트 12 〉	통과 (5.47ms, 54.7MB)
+테스트 13 〉	통과 (3.00ms, 52.9MB)
+테스트 14 〉	통과 (1.92ms, 52.4MB)
+테스트 15 〉	통과 (1.59ms, 52.7MB)
+테스트 16 〉	통과 (2.22ms, 53.1MB)
+테스트 17 〉	통과 (1.66ms, 52.4MB)
+테스트 18 〉	통과 (7.82ms, 52.9MB)
+테스트 19 〉	통과 (7.40ms, 52.8MB)
+테스트 20 〉	통과 (6.68ms, 53.6MB)
+테스트 21 〉	통과 (7.78ms, 53.5MB)
+테스트 22 〉	통과 (7.37ms, 53.7MB)
+테스트 23 〉	통과 (1.61ms, 52.3MB)
+테스트 24 〉	통과 (6.73ms, 53.2MB)
+테스트 25 〉	통과 (8.98ms, 53.1MB)
+테스트 26 〉	통과 (6.62ms, 53.7MB)
+테스트 27 〉	통과 (2.34ms, 52.9MB)
+테스트 28 〉	통과 (3.46ms, 52.4MB)
+채점 결과
+정확성: 100.0
+합계: 100.0 / 100.0
+*/
+import java.util.*;
+class Solution {
+	static ArrayList<HashSet<Integer>> ans;
+    public int solution(String[][] relation) {
+        ans = new ArrayList<>();
+		for(int i = 0; i <= relation[0].length; i++) {
+			comb(-1,i,0,new HashSet<>(), relation);
+		}
+        return ans.size();
+    }
+
+	private static void comb(int idx, int size, int s_idx, HashSet<Integer> keySet, String[][] relation) {
+		// TODO Auto-generated method stub
+		if(s_idx == size) {
+			for(HashSet<Integer> key: ans) {
+				if(keySet.containsAll(key)) {
+					return;
+				}
+			}
+			if(isUnique(keySet, relation)) {
+				ans.add(keySet);
+			}
+			return;
+		}
+		for(int i = idx+1; i < relation[0].length; i++) {
+			HashSet<Integer> newKey =  new HashSet<Integer>(keySet);
+			newKey.add(i);
+			comb(i, size, s_idx+1, newKey,relation);
+		}
+	}
+
+	private static boolean isUnique(HashSet<Integer> keySet, String[][] relation) {
+		// TODO Auto-generated method stub
+		HashSet<String> set = new HashSet<>();
+		for(int i = 0; i < relation.length; i++) {
+			String key = "";
+			for(int c: keySet) {
+				key += relation[i][c];
+			}
+			if(set.contains(key))
+				return false;
+			set.add(key);
+		}
+		return true;
+	}
+}
