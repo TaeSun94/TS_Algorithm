@@ -71,3 +71,52 @@ class Solution {
         input[j] = tmp;
     }
 }
+/*
+정확성  테스트
+테스트 1 〉	통과 (0.04ms, 52.3MB)
+테스트 2 〉	통과 (0.04ms, 51.9MB)
+테스트 3 〉	통과 (0.04ms, 51.9MB)
+테스트 4 〉	통과 (0.04ms, 52.2MB)
+테스트 5 〉	통과 (0.04ms, 52MB)
+테스트 6 〉	통과 (0.03ms, 52.6MB)
+테스트 7 〉	통과 (0.05ms, 52.2MB)
+테스트 8 〉	통과 (0.05ms, 54.5MB)
+테스트 9 〉	통과 (0.03ms, 52.9MB)
+테스트 10 〉	통과 (0.06ms, 51.7MB)
+테스트 11 〉	통과 (0.05ms, 52.1MB)
+테스트 12 〉	통과 (0.04ms, 52.4MB)
+테스트 13 〉	통과 (0.06ms, 52.2MB)
+테스트 14 〉	통과 (0.04ms, 52.8MB)
+효율성  테스트
+테스트 1 〉	실패 (런타임 에러)
+테스트 2 〉	실패 (런타임 에러)
+테스트 3 〉	통과 (0.06ms, 51.9MB)
+테스트 4 〉	실패 (런타임 에러)
+테스트 5 〉	실패 (런타임 에러)
+채점 결과
+정확성: 73.7
+효율성: 5.3
+합계: 78.9 / 100.0
+*/
+import java.util.*;
+class Solution {
+    public int[] solution(int n, long k) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int[] answer = new int[n];
+        int number = 1;
+        for(int i = 1; i <= n; i++){
+            number *= i;
+            list.add(i);
+        }
+        k--;
+        int index = 0;
+        while(n>0){
+            number /= n;
+            answer[index++] = list.get((int)(k/number));
+            list.remove((int)(k/number));
+            k %= number;
+            n--;
+        }
+        return answer;
+    }
+}
