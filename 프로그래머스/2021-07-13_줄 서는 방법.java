@@ -120,3 +120,53 @@ class Solution {
         return answer;
     }
 }
+/*
+Third Try -> 기준이 되는 number의 자료형을 long으로 변경한 뒤 list에서 꺼낼때 Integer로 형변환하여 가져오도록 하였음.
+정확성  테스트
+테스트 1 〉	통과 (0.05ms, 52.7MB)
+테스트 2 〉	통과 (0.05ms, 52.3MB)
+테스트 3 〉	통과 (0.04ms, 53.3MB)
+테스트 4 〉	통과 (0.04ms, 52.3MB)
+테스트 5 〉	통과 (0.04ms, 52.3MB)
+테스트 6 〉	통과 (0.05ms, 52.7MB)
+테스트 7 〉	통과 (0.04ms, 52.4MB)
+테스트 8 〉	통과 (0.04ms, 53MB)
+테스트 9 〉	통과 (0.05ms, 52.3MB)
+테스트 10 〉	통과 (0.05ms, 52.9MB)
+테스트 11 〉	통과 (0.05ms, 52.7MB)
+테스트 12 〉	통과 (0.04ms, 52.7MB)
+테스트 13 〉	통과 (0.05ms, 51.4MB)
+테스트 14 〉	통과 (0.04ms, 51.9MB)
+효율성  테스트
+테스트 1 〉	통과 (0.06ms, 52.6MB)
+테스트 2 〉	통과 (0.05ms, 52.1MB)
+테스트 3 〉	통과 (0.06ms, 52.6MB)
+테스트 4 〉	통과 (0.06ms, 52.6MB)
+테스트 5 〉	통과 (0.05ms, 52.2MB)
+채점 결과
+정확성: 73.7
+효율성: 26.3
+합계: 100.0 / 100.0
+*/
+import java.util.*;
+class Solution {
+    public int[] solution(int n, long k) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int[] answer = new int[n];
+        long number = 1;
+        for(int i = 1; i <= n; i++){
+            number *= i;
+            list.add(i);
+        }
+        k-=1;
+        int index = 0;
+        while(n>0){
+            number /= n;
+            answer[index++] = list.get((int)(k/number));
+            list.remove((int)(k/number));
+            k %= number;
+            n--;
+        }
+        return answer;
+    }
+}
