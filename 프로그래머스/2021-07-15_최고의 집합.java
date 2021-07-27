@@ -111,3 +111,58 @@ class Solution {
         return answer;
     }
 }
+/*
+Third Try -> 배열을 한번만 돌면서 끝내는 방법. pq를 사용하지않고 만약 s가 n으로 나누었을 경우 나머지가 0이라면 s를 n으로 나눈 몫을 넣고
+             만약 나눠지지 않는다면 나눠지는 부분까지 몫을 넣은 뒤 +1씩 증가시켜 해결 -> 기존 pq를 사용했을 때, arraylist를 사용했을 때 보다
+             빠르다
+정확성  테스트
+테스트 1 〉	통과 (0.10ms, 52.1MB)
+테스트 2 〉	통과 (0.16ms, 53.2MB)
+테스트 3 〉	통과 (0.13ms, 53.5MB)
+테스트 4 〉	통과 (0.14ms, 53.2MB)
+테스트 5 〉	통과 (0.04ms, 53MB)
+테스트 6 〉	통과 (0.08ms, 53.7MB)
+테스트 7 〉	통과 (0.05ms, 52.7MB)
+테스트 8 〉	통과 (0.03ms, 52.1MB)
+테스트 9 〉	통과 (0.11ms, 52.9MB)
+테스트 10 〉	통과 (0.14ms, 53.9MB)
+테스트 11 〉	통과 (0.15ms, 53.5MB)
+테스트 12 〉	통과 (0.07ms, 53.7MB)
+테스트 13 〉	통과 (0.17ms, 52.8MB)
+테스트 14 〉	통과 (0.03ms, 52.9MB)
+효율성  테스트
+테스트 1 〉	통과 (0.21ms, 53.7MB)
+테스트 2 〉	통과 (0.17ms, 54.2MB)
+테스트 3 〉	통과 (0.11ms, 52.9MB)
+테스트 4 〉	통과 (0.13ms, 53.1MB)
+테스트 5 〉	통과 (0.18ms, 55.6MB)
+테스트 6 〉	통과 (0.05ms, 52.6MB)
+채점 결과
+정확성: 70.0
+효율성: 30.0
+합계: 100.0 / 100.0
+*/
+import java.util.*;
+class Solution {
+    public int[] solution(int n, int s) {
+        int[] answer = new int[n];
+        if(n > s)
+            return new int[]{-1};
+        if(s%n == 0){
+            for(int i = 0; i < n; i ++){
+                answer[i] = s/n;
+            }
+        }
+        else{
+            int remain = s % n;
+            int pos = n - remain;
+            for(int i = 0; i < pos; i++){
+                answer[i] = s / n;
+            }
+            for(int i = pos; i < n; i++){
+                answer[i] = s/ n + 1;
+            }
+        }
+        return answer;
+    }
+}
