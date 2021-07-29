@@ -78,3 +78,116 @@ class Solution {
 		}
 	}
 }
+/*
+Second Try -> 완전 탐색을 통하여 계산. 2의 배수인지 확인후 계산.
+정확성  테스트
+테스트 1 〉	통과 (0.15ms, 54MB)
+테스트 2 〉	실패 (1.28ms, 52.5MB)
+테스트 3 〉	통과 (3.40ms, 52.4MB)
+테스트 4 〉	통과 (7.24ms, 59.1MB)
+테스트 5 〉	실패 (14.35ms, 53.6MB)
+테스트 6 〉	실패 (14.57ms, 57.6MB)
+테스트 7 〉	실패 (85.81ms, 76.9MB)
+테스트 8 〉	통과 (144.80ms, 83.2MB)
+테스트 9 〉	통과 (8684.19ms, 372MB)
+테스트 10 〉	실패 (시간 초과)
+테스트 11 〉	실패 (시간 초과)
+테스트 12 〉	실패 (시간 초과)
+테스트 13 〉	실패 (시간 초과)
+테스트 14 〉	실패 (시간 초과)
+테스트 15 〉	실패 (시간 초과)
+테스트 16 〉	실패 (시간 초과)
+테스트 17 〉	실패 (시간 초과)
+테스트 18 〉	실패 (시간 초과)
+테스트 19 〉	실패 (시간 초과)
+테스트 20 〉	실패 (시간 초과)
+테스트 21 〉	실패 (시간 초과)
+테스트 22 〉	실패 (시간 초과)
+테스트 23 〉	실패 (시간 초과)
+테스트 24 〉	실패 (시간 초과)
+테스트 25 〉	실패 (시간 초과)
+테스트 26 〉	실패 (시간 초과)
+테스트 27 〉	실패 (시간 초과)
+테스트 28 〉	실패 (4.91ms, 52.6MB)
+채점 결과
+정확성: 17.9
+합계: 17.9 / 100.0
+*/
+import java.util.*;
+class Solution {
+    static boolean[] check;
+    static int max;
+    public int solution(int[] a) {
+        int answer = -1;
+        max = 0;
+        for(int i = 0; i <= a.length; i++){
+            if(max > 0)
+                break;
+            if(i==a.length){
+                return 0;
+            }
+            check = new boolean[a.length];
+            if((a.length-i)%2 != 0){
+                continue;
+            }
+            //i개의 원소를 밴 나머지 리스트
+            dfs(0,i,a);
+        }
+        return max;
+    }
+    public void dfs(int idx, int count, int[]a){
+        if(count == 0){
+            ArrayList<Integer> list = new ArrayList<>();
+            for(int i = 0; i < check.length; i++){
+                if(!check[i])
+                    list.add(a[i]);
+            }
+            //스타수열 체크
+            if(starArrayCheck(list)){
+                max = Math.max(list.size(),max);
+            }
+            return;
+        }
+        for(int i = idx; i < a.length; i++){
+            if(!check[i]){
+                check[i] = true;
+                dfs(i+1, count-1,a);
+                check[i] = false;
+            }
+        }
+        return;
+    }
+    public boolean starArrayCheck(ArrayList<Integer> list){
+        HashSet<Integer> set = new HashSet<>();
+        for(int i = 0; i <list.size(); i+=2){
+            if(set.isEmpty()){
+                set.add(list.get(i));
+                set.add(list.get(i+1));
+            }
+            else{
+                if(set.contains(list.get(i))){
+                    if(set.contains(list.get(i+1))){
+                        continue;
+                    }
+                    else{
+                        set.clear();
+                        set.add(list.get(i));
+                    }
+                }
+                else if(set.contains(list.get(i+1))){
+                    if(set.contains(list.get(i))){
+                        continue;
+                    }
+                    else{
+                        set.clear();
+                        set.add(list.get(i+1));
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
