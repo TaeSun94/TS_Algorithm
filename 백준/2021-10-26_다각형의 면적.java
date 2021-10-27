@@ -1,19 +1,7 @@
 package 쩜문제추천;
-import java.util.*;
 public class 다각형의면적 {
-	static class Point{
-		int x,y;
-
-		public Point(int x, int y) {
-			super();
-			this.x = x;
-			this.y = y;
-		}
-
-	}
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		ArrayList<Point> list = new ArrayList<>();
 		int N = sc.nextInt();
 		long[] x = new long[N+1];
 		long[] y = new long[N+1];
