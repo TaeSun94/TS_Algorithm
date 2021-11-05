@@ -1,4 +1,3 @@
-package 쩜문제추천;
 import java.util.*;
 import java.io.*;
 public class 음악프로그램 {
